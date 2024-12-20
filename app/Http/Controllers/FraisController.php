@@ -4,13 +4,21 @@ namespace App\Http\Controllers;
 
 use App\dao\FraisService;
 use App\Models\Frai;
+use App\Models\Visiteur;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 class FraisController
 {
     public function listerFrais($idfrais) {
         $servicefrais = new FraisService();
         $unfrais = $servicefrais->getFrais($idfrais);
+
+        $visiteur=Auth::user();
+        if($unfrais->id_visiteur != $visiteur->id_visiteur)
+            return redirect(route('login'));
+
         return response()->json([$unfrais]);
+
 
     }
     function details($idfrais){

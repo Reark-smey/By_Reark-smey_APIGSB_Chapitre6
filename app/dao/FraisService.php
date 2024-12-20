@@ -18,7 +18,7 @@ class FraisService
                     'montantvalide','frais.id_etat','etat.lib_etat')
                 ->join ('etat','etat.id_etat','=','frais.id_etat')
                 ->where('id_frais', '=',$idfrais )
-                ->get();
+                ->first();
             return $frais;
         } catch(QueryException $e ) {
             throw new MonException($e->getMessage(), 5);
